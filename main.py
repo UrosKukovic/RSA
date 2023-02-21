@@ -17,8 +17,8 @@ d = 0
 
 
 def primes_in_range():
-    min = 100000
-    max = 101000
+    min = 100
+    max = 200
 
     for i in range(min, max):
         for x in range(2, i):
@@ -44,6 +44,8 @@ def two_random_primes():
 def define_rest_of_RSA():
     N = p*q
     t = (p-1) * (q-1)
+    print("N:", N)
+    print("t:", t)
 
 
     #print("Izberite moznost:\n")
@@ -79,3 +81,5 @@ def define_rest_of_RSA():
 primes_in_range()
 
 two_random_primes()
+
+define_rest_of_RSA()
