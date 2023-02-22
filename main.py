@@ -11,7 +11,7 @@ p = 0
 q = 0
 t = 0
 
-N = 0
+n = 0
 e = 0
 d = 0
 
@@ -29,7 +29,7 @@ def primes_in_range():
 
 
 def two_random_primes():
-
+    global p, q
     while True:
         x = random.randint(0, (len(primes))-1)
         y = random.randint(0, (len(primes))-1)
@@ -42,9 +42,10 @@ def two_random_primes():
 
 
 def define_rest_of_RSA():
-    N = p*q
+    global n, t
+    n = p*q
     t = (p-1) * (q-1)
-    print("N:", N)
+    print("n:", n)
     print("t:", t)
 
 
