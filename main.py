@@ -1,8 +1,8 @@
 import random
 import sys
 
-in_message = []
-out_message = []
+#message = []
+cipher = []
 choice = 0
 key = (5*3)
 
@@ -17,10 +17,10 @@ e = 0
 d = 0
 
 
-FermatPrimes = [3, 5, 17, 257, 65537, 42944967297]
+FermatPrimes = [17, 257, 65537, 42944967297]
 
 
-def PrimesInRange():
+def AllPrimesInRange():
     min = 10
     max = 50
 
@@ -32,7 +32,7 @@ def PrimesInRange():
             primes.append(i)
 
 
-def TwoRandomPrimes():
+def Define_p_q():
     global p, q
     while True:
         x = random.randint(0, (len(primes))-1)
@@ -45,18 +45,21 @@ def TwoRandomPrimes():
     print("p: ", p, "q: ", q)
 
 
-def defineRestOfRSA():
+def DefinePublic():
     global n, e
-    n = p*q
+    n = p * q
     print("n:", n)
 
-    x = random.randint(0, (len(FermatPrimes))-1)
-    e = FermatPrimes[x]
+    while True:
+        x = random.randint(0, (len(FermatPrimes))-1)
+        e = FermatPrimes[x]
+        if e < tot:
+            break
+
     print("e: ", e)
 
 
-def ComputeTot():
-
+def CalculateTot():
     global p, q, tot
 
     x = p - 1
@@ -75,49 +78,46 @@ def ComputeTot():
     print("tot: ", tot)
 
 
-def modInverse(e, tot):
+def DefinePrivate():
+    global d
 
-    for X in range(1, tot):
-        if (((e % tot) * (X % tot)) % tot == 1):
-            return X
-    return -1
-
-    # print("Izberite moznost:\n")
-    # print("1-Kriptiranje\n")
-    # print("2-Dekriptiranje\n")
-    # choice = int(input())
-    # if choice == 1:
-    #    print("\nVnesite sporocilo: \n")
-    #    in_message = input()
-    #
-    # elif choice == 2:
-    #    print("\nVnesite sporocilo: \n")
-    #    in_message = input().split()
-    #
-    # else:
-    #    print("Nepravilno!")
-    #
-    # if choice == 1:
-    #    for i in in_message:
-    #        out_message.append(ord(i))
-    #
-    #    for x in out_message:
-    #        print(x*key)
-    #
-    # elif choice == 2:
-    #    for i in in_message:
-    #        rez = int(i)/key
-    #        out_message.append(rez)
-    #
-    #    for i in out_message:
-    #        print(chr(int(i)))
-    #
+    for x in range(1, tot):
+        if (((e % tot) * (x % tot)) % tot == 1):
+            break
+    d = x
+    print("d: ", d)
 
 
-PrimesInRange()
+while True:
+    choice = 0
+    print("Izberite moznost:\n")
+    print("1-Kriptiranje\n")
+    print("2-Dekriptiranje\n")
+    choice = int(input("Moznost: "))
 
-TwoRandomPrimes()
+    if choice == 1:
+        global message
 
-defineRestOfRSA()
+        message = []
+        print("\nVnesite sporocilo: \n")
+        message = input()
+        break
+    elif choice == 2:
+        print("\nVnesite sporocilo: \n")
+        message = input().split()
+        break
+    else:
+        print("----------------Nepravilno!------------")
 
-ComputeTot()
+if choice == 1:
+
+    AllPrimesInRange()
+    Define_p_q()
+    CalculateTot()
+    DefinePublic()
+    DefinePrivate()
+
+    for i in message:
+        cipher.append((ord(i) ** e) % n)
+
+print(cipher)
