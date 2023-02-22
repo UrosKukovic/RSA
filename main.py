@@ -1,10 +1,9 @@
 import random
 import sys
 
-#message = []
+message = []
 cipher = []
 choice = 0
-key = (5*3)
 
 primes = []
 p = 0
@@ -21,8 +20,8 @@ FermatPrimes = [17, 257, 65537, 42944967297]
 
 
 def AllPrimesInRange():
-    min = 10
-    max = 50
+    min = 100
+    max = 200
 
     for i in range(min, max):
         for x in range(2, i):
@@ -88,36 +87,48 @@ def DefinePrivate():
     print("d: ", d)
 
 
-while True:
-    choice = 0
-    print("Izberite moznost:\n")
-    print("1-Kriptiranje\n")
-    print("2-Dekriptiranje\n")
-    choice = int(input("Moznost: "))
+if __name__ == '__main__':
+
+    while True:
+        choice = 0
+        print("Izberite moznost:\n")
+        print("1-Kriptiranje\n")
+        print("2-Dekriptiranje\n")
+        choice = int(input("Moznost: "))
+
+        if choice == 1:
+
+            AllPrimesInRange()
+            Define_p_q()
+            CalculateTot()
+            DefinePublic()
+            DefinePrivate()
+
+            print("\nVnesite sporocilo: \n")
+            message = input()
+            break
+        elif choice == 2:
+
+            print("\nVnesite sporocilo: \n")
+            cipher = input().split()
+            break
+        else:
+            print("----------------Nepravilno!------------")
 
     if choice == 1:
-        global message
 
-        message = []
-        print("\nVnesite sporocilo: \n")
-        message = input()
-        break
-    elif choice == 2:
-        print("\nVnesite sporocilo: \n")
-        message = input().split()
-        break
-    else:
-        print("----------------Nepravilno!------------")
+        for i in message:
+            cipher.append((ord(i) ** e) % n)
 
-if choice == 1:
+        print(cipher)
 
-    AllPrimesInRange()
-    Define_p_q()
-    CalculateTot()
-    DefinePublic()
-    DefinePrivate()
+    if choice == 2:
 
-    for i in message:
-        cipher.append((ord(i) ** e) % n)
+        n = 17741
+        d = 257
 
-print(cipher)
+        for i in cipher:
+            message.append((int(i) ** d) % n)
+
+        for i in message:
+            print(chr(i))
