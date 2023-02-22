@@ -9,16 +9,20 @@ key = (5*3)
 primes = []
 p = 0
 q = 0
-t = 0
+
+tot = 0
 
 n = 0
 e = 0
 d = 0
 
 
-def primes_in_range():
-    min = 100
-    max = 200
+FermatPrimes = [3, 5, 17, 257, 65537, 42944967297]
+
+
+def PrimesInRange():
+    min = 10
+    max = 50
 
     for i in range(min, max):
         for x in range(2, i):
@@ -28,7 +32,7 @@ def primes_in_range():
             primes.append(i)
 
 
-def two_random_primes():
+def TwoRandomPrimes():
     global p, q
     while True:
         x = random.randint(0, (len(primes))-1)
@@ -38,21 +42,50 @@ def two_random_primes():
         if p != q:
             break
 
-    print(p, q)
+    print("p: ", p, "q: ", q)
 
 
-def define_rest_of_RSA():
-    global n, t
+def defineRestOfRSA():
+    global n, e
     n = p*q
-    t = (p-1) * (q-1)
     print("n:", n)
-    print("t:", t)
+
+    x = random.randint(0, (len(FermatPrimes))-1)
+    e = FermatPrimes[x]
+    print("e: ", e)
 
 
-    #print("Izberite moznost:\n")
+def ComputeTot():
+
+    global p, q, tot
+
+    x = p - 1
+    y = q - 1
+    if x > y:
+        greater = x
+    else:
+        greater = y
+
+    while(True):
+        if((greater % x == 0) and (greater % y == 0)):
+            tot = greater
+            break
+        greater += 1
+
+    print("tot: ", tot)
+
+
+def modInverse(e, tot):
+
+    for X in range(1, tot):
+        if (((e % tot) * (X % tot)) % tot == 1):
+            return X
+    return -1
+
+    # print("Izberite moznost:\n")
     # print("1-Kriptiranje\n")
     # print("2-Dekriptiranje\n")
-    #choice = int(input())
+    # choice = int(input())
     # if choice == 1:
     #    print("\nVnesite sporocilo: \n")
     #    in_message = input()
@@ -79,8 +112,12 @@ def define_rest_of_RSA():
     #    for i in out_message:
     #        print(chr(int(i)))
     #
-primes_in_range()
 
-two_random_primes()
 
-define_rest_of_RSA()
+PrimesInRange()
+
+TwoRandomPrimes()
+
+defineRestOfRSA()
+
+ComputeTot()
