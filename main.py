@@ -1,5 +1,7 @@
 import random
 import sys
+import os
+import subprocess
 
 message = []
 cipher = []
@@ -108,9 +110,15 @@ if __name__ == '__main__':
             message = input()
             break
         elif choice == 2:
+            print("Vnesite zasebni ključ: ")
+            n = int(input("n: "))
+            d = int(input("d: "))
 
-            print("\nVnesite sporocilo: \n")
-            cipher = input().split()
+            print("\nOdpiranje .txt datoteke... \n")
+            f = open("encrypted.txt", "r")
+            data = f.read()
+            cipher = data.split("\n")
+            f.close()
             break
         else:
             print("----------------Nepravilno!------------")
@@ -120,15 +128,18 @@ if __name__ == '__main__':
         for i in message:
             cipher.append((ord(i) ** e) % n)
 
-        print(cipher)
+        # writing to file
+        f = open("encrypted.txt", "w")
+        f.write(str(cipher))
+        f.close()
+
+        subprocess.run(["messageFormat.sh"], shell=True)
+        #print(cipher, end='')
 
     if choice == 2:
-
-        n = 17741
-        d = 257
 
         for i in cipher:
             message.append((int(i) ** d) % n)
 
         for i in message:
-            print(chr(i))
+            print(chr(i), end='')
