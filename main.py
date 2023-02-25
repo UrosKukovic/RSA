@@ -95,8 +95,9 @@ if __name__ == '__main__':
     while True:
         choice = 0
         print("Izberite moznost:\n")
-        print("1-Kriptiranje\n")
-        print("2-Dekriptiranje\n")
+        print("1-Kriptiranje -> encrypted.txt\n")
+        print("2-encrypted.txt -> Dekriptiranje\n")
+        print("3-Poljubno dekriptiranje - ni še dodano!\n")
         choice = int(input("Moznost: "))
 
         if choice == 1:
@@ -138,6 +139,8 @@ if __name__ == '__main__':
 
         subprocess.run(["messageFormat.sh"], shell=True)
         print("\nEnkripcija končana, glej datoteko \"encrypted.txt\"\n")
+        print("\nPritisni tipko ENTER za izhod...")
+        input()
 
     if choice == 2:
 
@@ -147,4 +150,5 @@ if __name__ == '__main__':
         print("\nDekodirano sporočilo: ")
         for i in message:
             print(chr(i), end='')
-        print("\n")
+        print("\nPritisni tipko ENTER za izhod...")
+        input()
