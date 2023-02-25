@@ -6,6 +6,7 @@ import subprocess
 message = []
 cipher = []
 choice = 0
+data = []
 
 primes = []
 p = 0
@@ -100,24 +101,26 @@ if __name__ == '__main__':
 
         if choice == 1:
 
+            print("Računanje vrednosti...")
+
             AllPrimesInRange()
             Define_p_q()
             CalculateTot()
             DefinePublic()
             DefinePrivate()
 
-            print("\nVnesite sporocilo: \n")
-            message = input()
+            message = input("\nVnesite sporocilo: \n")
             break
         elif choice == 2:
-            print("Vnesite zasebni ključ: ")
+            print("\nVnesite zasebni ključ: ")
             n = int(input("n: "))
             d = int(input("d: "))
 
             print("\nOdpiranje .txt datoteke... \n")
             f = open("encrypted.txt", "r")
-            data = f.read()
-            cipher = data.split("\n")
+            cipher = f.read().split()
+
+            #cipher = input("Vnesite kriptirano sporočilo\n").split()
             f.close()
             break
         else:
@@ -134,12 +137,14 @@ if __name__ == '__main__':
         f.close()
 
         subprocess.run(["messageFormat.sh"], shell=True)
-        #print(cipher, end='')
+        print("\nEnkripcija končana, glej datoteko \"encrypted.txt\"\n")
 
     if choice == 2:
 
         for i in cipher:
             message.append((int(i) ** d) % n)
 
+        print("\nDekodirano sporočilo: ")
         for i in message:
             print(chr(i), end='')
+        print("\n")
