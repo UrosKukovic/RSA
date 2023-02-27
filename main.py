@@ -121,8 +121,14 @@ if __name__ == '__main__':
             f = open("encrypted.txt", "r")
             cipher = f.read().split()
 
-            #cipher = input("Vnesite kriptirano sporočilo\n").split()
             f.close()
+            break
+        elif choice == 3:
+            print("\nVnesite zasebni ključ: ")
+            n = int(input("n: "))
+            d = int(input("d: "))
+
+            cipher = input("\nVnesite enrkiptirano sporočilo: ").split()
             break
         else:
             print("----------------Nepravilno!------------")
@@ -142,7 +148,7 @@ if __name__ == '__main__':
         print("\nPritisni tipko ENTER za izhod...")
         input()
 
-    if choice == 2:
+    elif choice == 2 or choice == 3:
 
         for i in cipher:
             message.append((int(i) ** d) % n)
