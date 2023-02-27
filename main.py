@@ -97,7 +97,8 @@ if __name__ == '__main__':
         print("Izberite moznost:\n")
         print("1-Kriptiranje -> encrypted.txt\n")
         print("2-encrypted.txt -> Dekriptiranje\n")
-        print("3-Poljubno dekriptiranje - ni še dodano!\n")
+        print("3-Poljubno dekriptiranje\n")
+        print("4-Kriptiranje poljubne .txt datoteke -> encrypted.txt - in development\n")
         choice = int(input("Moznost: "))
 
         if choice == 1:
@@ -110,7 +111,7 @@ if __name__ == '__main__':
             DefinePublic()
             DefinePrivate()
 
-            message = input("\nVnesite sporocilo: \n")
+            message = input("\nVnesite sporočilo: \n")
             break
         elif choice == 2:
             print("\nVnesite zasebni ključ: ")
@@ -130,10 +131,26 @@ if __name__ == '__main__':
 
             cipher = input("\nVnesite enrkiptirano sporočilo: ").split()
             break
+        elif choice == 4:
+            print("Računanje vrednosti...")
+
+            AllPrimesInRange()
+            Define_p_q()
+            CalculateTot()
+            DefinePublic()
+            DefinePrivate()
+
+            print("\nOdpiranje datoteke...")
+
+            f = open("message.txt", "r")
+            message = f.read()
+
+            f.close()
+            break
         else:
             print("----------------Nepravilno!------------")
 
-    if choice == 1:
+    if choice == 1 or choice == 4:
 
         for i in message:
             cipher.append((ord(i) ** e) % n)
