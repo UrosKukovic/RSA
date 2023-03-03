@@ -94,6 +94,36 @@ def DefinePrivate():
     print("d: ", d)
 
 
+def EnkrBesVDatoteko():
+    enkrbes = Tk()
+
+    enkrbes.title("Enkriptiranje besedila")
+    enkrbes.geometry('400x400')
+
+    a = Label(enkrbes, text="Enkriptiranje besedila").pack()
+
+    enkrbes.mainloop()
+
+
+def DekrBesIzDatoteke():
+
+    dekrbes = Tk()
+
+    dekrbes.title("Dekriptiranje besedila")
+    dekrbes.geometry('400x400')
+
+    b = Label(dekrbes, text="Dekriptiranje besedila").pack()
+
+    dekrbes.mainloop()
+
+
+def windowChoice():
+    if v.get() == 1:
+        EnkrBesVDatoteko()
+    elif v.get() == 2:
+        DekrBesIzDatoteke()
+
+
 if __name__ == '__main__':
 
     root = Tk()
@@ -101,22 +131,28 @@ if __name__ == '__main__':
     root.title("RSA kriptiranje")
     root.geometry('700x700')
 
-    v = StringVar(root, "1")
+    v = IntVar()
+    #v = StringVar(root, "1")
 
     style = Style(root)
     style.configure("TRadiobutton",
                     foreground="black", font=("arial", 15, "bold"))
     # Dictionary to create multiple buttons
-    values = {"Enkriptiraj datoteko": "1",
-              "Enkriptiraj besedilo": "2",
-              "Dekriptiraj datoteko": "3",
-              "Dekriptiraj besedilo": "4"}
+    values = {"Enkriptiraj datoteko v datoteko": 1,
+              "Dekriptiraj besedilo iz datoteke": 2,
+              "Poljubno dektriptiranje": 3,
+              "Dekriptiranje poljubne datoteke": 4}
 
     # Loop is used to create multiple Radiobuttons
     # rather than creating each button separately
     for (text, value) in values.items():
         Radiobutton(root, text=text, variable=v,
-                    value=value).pack(side=TOP, ipady=10)
+                    value=value, command=windowChoice).pack(side=TOP, ipady=10)
+
+    # Radiobutton1 = Radiobutton(
+    #    root, text="1.moznost", variable=v, value=1, command=test).pack()
+    # Radiobutton2 = Radiobutton(
+    #    root, text="2.moznost", variable=v, value=2, command=test).pack()
 
     root.mainloop()
 
