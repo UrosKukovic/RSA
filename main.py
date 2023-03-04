@@ -97,7 +97,7 @@ def DefinePrivate():
 current_window = None
 
 
-def OnSubmit():
+def OnSubmitBesedilo():
 
     AllPrimesInRange()
     Define_p_q()
@@ -105,7 +105,7 @@ def OnSubmit():
     DefinePublic()
     DefinePrivate()
 
-    message = input_box.get()
+    message = Text_box.get("1.0", "end-1c")
 
     for i in message:
         cipher.append((ord(i) ** e) % n)
@@ -118,17 +118,36 @@ def OnSubmit():
     subprocess.run(["messageFormat.bat"], shell=True)
 
 
+def OnSubmitDatoteka():
+    n = int(n_gui.get("1.0", "end-1c"))
+    d = int(d_gui.get("1.0", "end-1c"))
+
+    print("\nOdpiranje .txt datoteke... \n")
+    f = open("encrypted.txt", "r")
+    cipher = f.read().split()
+    f.close()
+
+    for i in cipher:
+        message.append((int(i) ** d) % n)
+
+    print("\nDekodirano sporočilo: ")
+    for i in message:
+        print(chr(i), end='')
+
+    input()
+
+
 def EnkrBesVDatoteko():
-    global input_box
+    global Text_box
     enkrbes = tk.Tk()
 
     # create an input box and add it to the enkrbes
-    input_box = tk.Entry(enkrbes)
-    input_box.pack()
+    Text_box = tk.Text(enkrbes, width=200, height=5, font=('Arial, 12'))
+    Text_box.pack()
 
     # create a button to submit the input
-    submit_button = tk.Button(enkrbes, text="Submit", command=OnSubmit)
-    submit_button.pack()
+    submit_button = tk.Button(enkrbes, text="Submit",
+                              command=OnSubmitBesedilo).pack()
 
     # Set the protocol to handle window closing
     enkrbes.protocol("WM_DELETE_WINDOW", lambda: close_window(enkrbes))
@@ -143,15 +162,37 @@ def EnkrBesVDatoteko():
 
 def DekrBesIzDatoteke():
 
-    dekrbes = Tk()
+    global n_gui
+    global d_gui
+    dekrbes = tk.Tk()
+
+    dekrbes.title("Dekriptiranje besedila")
+    dekrbes.geometry('400x400')
+    # create an input box and add it to the enkrbes
+
+    Label(dekrbes, text="Vnesite zasebni ključ").grid(row=0, column=0)
+
+    n_value = Label(dekrbes, text="n = ")
+    n_value.grid(row=1, column=0, pady=5, padx=5)
+
+    d_value = Label(dekrbes, text="d = ")
+    d_value.grid(row=2, column=0, pady=5, padx=5)
+
+    n_gui = tk.Text(dekrbes, font=('Arial, 10'), width=15, height=1)
+    n_gui.grid(row=1, column=1, pady=5, padx=5)
+
+    d_gui = tk.Text(dekrbes, font=('Arial, 10'), width=15, height=1)
+    d_gui.grid(row=2, column=1, pady=5, padx=5)
+
+    # create a button to submit the input
+    submit_button = tk.Button(dekrbes, text="Potrdi",
+                              command=OnSubmitDatoteka)
+    submit_button.grid(row=1, column=2)
 
     # Set the protocol to handle window closing
     dekrbes.protocol("WM_DELETE_WINDOW", lambda: close_window(dekrbes))
 
-    dekrbes.title("Dekriptiranje besedila")
-    dekrbes.geometry('400x400')
-
-    b = Label(dekrbes, text="Dekriptiranje besedila").pack()
+    print("test")
 
     return dekrbes
 
