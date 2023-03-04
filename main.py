@@ -94,41 +94,41 @@ def DefinePrivate():
     print("d: ", d)
 
 
-# # def EnkrBesVDatoteko():
-# #     enkrbes = Tk()
-
-# #     enkrbes.title("Enkriptiranje besedila")
-# #     enkrbes.geometry('400x400')
-
-# #     a = Label(enkrbes, text="Enkriptiranje besedila").pack()
-
-# #     enkrbes.mainloop()
-
-
-# # def DekrBesIzDatoteke():
-
-# #     dekrbes = Tk()
-
-# #     dekrbes.title("Dekriptiranje besedila")
-# #     dekrbes.geometry('400x400')
-
-# #     b = Label(dekrbes, text="Dekriptiranje besedila").pack()
-
-# #     dekrbes.mainloop()
-
-
-# # def windowChoice():
-# #     if v.get() == 1:
-# #         EnkrBesVDatoteko()
-# #     elif v.get() == 2:
-# #         DekrBesIzDatoteke()
-
-
 current_window = None
 
 
+def OnSubmit():
+
+    AllPrimesInRange()
+    Define_p_q()
+    CalculateTot()
+    DefinePublic()
+    DefinePrivate()
+
+    message = input_box.get()
+
+    for i in message:
+        cipher.append((ord(i) ** e) % n)
+
+    # writing to file
+    f = open("encrypted.txt", "w")
+    f.write(str(cipher))
+    f.close()
+
+    subprocess.run(["messageFormat.bat"], shell=True)
+
+
 def EnkrBesVDatoteko():
-    enkrbes = Tk()
+    global input_box
+    enkrbes = tk.Tk()
+
+    # create an input box and add it to the enkrbes
+    input_box = tk.Entry(enkrbes)
+    input_box.pack()
+
+    # create a button to submit the input
+    submit_button = tk.Button(enkrbes, text="Submit", command=OnSubmit)
+    submit_button.pack()
 
     # Set the protocol to handle window closing
     enkrbes.protocol("WM_DELETE_WINDOW", lambda: close_window(enkrbes))
@@ -214,11 +214,11 @@ if __name__ == '__main__':
     root.geometry('700x700')
 
     v = IntVar()
-    #v = StringVar(root, "1")
 
     style = Style(root)
     style.configure("TRadiobutton",
                     foreground="black", font=("arial", 15, "bold"))
+
     # Dictionary to create multiple buttons
     values = {"Enkriptiraj besedilo v datoteko": 1,
               "Dekriptiraj besedilo iz datoteke": 2,
@@ -231,91 +231,86 @@ if __name__ == '__main__':
         Radiobutton(root, text=text, variable=v,
                     value=value, command=windowChoice).pack(side=TOP, ipady=10)
 
-    # Radiobutton1 = Radiobutton(
-    #    root, text="1.moznost", variable=v, value=1, command=test).pack()
-    # Radiobutton2 = Radiobutton(
-    #    root, text="2.moznost", variable=v, value=2, command=test).pack()
-
     root.mainloop()
 
     # while True:
-    #    choice = 0
-    #    print("Izberite moznost:\n")
-    #    print("1-Kriptiranje -> encrypted.txt\n")
-    #    print("2-encrypted.txt -> Dekriptiranje\n")
-    #    print("3-Poljubno dekriptiranje\n")
-    #    print("4-Kriptiranje poljubne .txt datoteke -> encrypted.txt - in development\n")
-    #    choice = int(input("Moznost: "))
-#
+    #     choice = 0
+    #     print("Izberite moznost:\n")
+    #     print("1-Kriptiranje -> encrypted.txt\n")
+    #     print("2-encrypted.txt -> Dekriptiranje\n")
+    #     print("3-Poljubno dekriptiranje\n")
+    #     print("4-Kriptiranje poljubne .txt datoteke -> encrypted.txt - in development\n")
+    #     choice = int(input("Moznost: "))
+
     #    if choice == 1:
-#
+
     #        print("Računanje vrednosti...")
-#
+
     #        AllPrimesInRange()
     #        Define_p_q()
     #        CalculateTot()
     #        DefinePublic()
     #        DefinePrivate()
-#
+
     #        message = input("\nVnesite sporočilo: \n")
     #        break
     #    elif choice == 2:
     #        print("\nVnesite zasebni ključ: ")
     #        n = int(input("n: "))
     #        d = int(input("d: "))
-#
+
     #        print("\nOdpiranje .txt datoteke... \n")
     #        f = open("encrypted.txt", "r")
     #        cipher = f.read().split()
-#
+
     #        f.close()
     #        break
     #    elif choice == 3:
     #        print("\nVnesite zasebni ključ: ")
     #        n = int(input("n: "))
     #        d = int(input("d: "))
-#
+
     #        cipher = input("\nVnesite enrkiptirano sporočilo: ").split()
     #        break
     #    elif choice == 4:
     #        print("Računanje vrednosti...")
-#
+
     #        AllPrimesInRange()
     #        Define_p_q()
     #        CalculateTot()
     #        DefinePublic()
     #        DefinePrivate()
-#
+
     #        print("\nOdpiranje datoteke...")
-#
+
     #        f = open("message.txt", "r")
     #        message = f.read()
-#
+
     #        f.close()
     #        break
     #    else:
     #        print("----------------Nepravilno!------------")
-#
+
     # if choice == 1 or choice == 4:
-#
+
     #    for i in message:
     #        cipher.append((ord(i) ** e) % n)
-#
+
     #    # writing to file
     #    f = open("encrypted.txt", "w")
     #    f.write(str(cipher))
     #    f.close()
-#
+
     #    subprocess.run(["messageFormat.sh"], shell=True)
     #    print("\nEnkripcija končana, glej datoteko \"encrypted.txt\"\n")
     #    print("\nPritisni tipko ENTER za izhod...")
     #    input()
-#
+
     # elif choice == 2 or choice == 3:
-#
+
     #    for i in cipher:
     #        message.append((int(i) ** d) % n)
-#
+
     #    print("\nDekodirano sporočilo: ")
     #    for i in message:
     #        print(chr(i), end='')
