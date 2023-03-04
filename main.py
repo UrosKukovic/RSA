@@ -130,6 +130,9 @@ current_window = None
 def EnkrBesVDatoteko():
     enkrbes = Tk()
 
+    # Set the protocol to handle window closing
+    enkrbes.protocol("WM_DELETE_WINDOW", lambda: close_window(enkrbes))
+
     enkrbes.title("Enkriptiranje besedila")
     enkrbes.geometry('400x400')
 
@@ -142,6 +145,9 @@ def DekrBesIzDatoteke():
 
     dekrbes = Tk()
 
+    # Set the protocol to handle window closing
+    dekrbes.protocol("WM_DELETE_WINDOW", lambda: close_window(dekrbes))
+
     dekrbes.title("Dekriptiranje besedila")
     dekrbes.geometry('400x400')
 
@@ -153,6 +159,10 @@ def DekrBesIzDatoteke():
 def PoljubnoDekr():
     PoljubnoDekr = Tk()
 
+    # Set the protocol to handle window closing
+    PoljubnoDekr.protocol("WM_DELETE_WINDOW",
+                          lambda: close_window(PoljubnoDekr))
+
     PoljubnoDekr.title("Poljubno dekriptiranje")
     PoljubnoDekr.geometry('400x400')
 
@@ -163,6 +173,10 @@ def PoljubnoDekr():
 
 def DekrPoljubneDat():
     DekrPoljubneDat = Tk()
+
+    # Set the protocol to handle window closing
+    DekrPoljubneDat.protocol(
+        "WM_DELETE_WINDOW", lambda: close_window(DekrPoljubneDat))
 
     DekrPoljubneDat.title("Dekriptiranje poljubne datoteke")
     DekrPoljubneDat.geometry('400x400')
@@ -184,6 +198,12 @@ def windowChoice():
         current_window = PoljubnoDekr()
     elif v.get() == 4:
         current_window = DekrPoljubneDat()
+
+
+def close_window(window):
+    global current_window
+    current_window = None
+    window.destroy()
 
 
 if __name__ == '__main__':
