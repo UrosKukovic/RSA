@@ -150,6 +150,28 @@ def DekrBesIzDatoteke():
     return dekrbes
 
 
+def PoljubnoDekr():
+    PoljubnoDekr = Tk()
+
+    PoljubnoDekr.title("Poljubno dekriptiranje")
+    PoljubnoDekr.geometry('400x400')
+
+    c = Label(PoljubnoDekr, text="Poljubno dekriptiranje").pack()
+
+    return PoljubnoDekr
+
+
+def DekrPoljubneDat():
+    DekrPoljubneDat = Tk()
+
+    DekrPoljubneDat.title("Dekriptiranje poljubne datoteke")
+    DekrPoljubneDat.geometry('400x400')
+
+    d = Label(DekrPoljubneDat, text="Dekriptiranje poljubne datoteke").pack()
+
+    return DekrPoljubneDat
+
+
 def windowChoice():
     global current_window
     if current_window:
@@ -158,6 +180,10 @@ def windowChoice():
         current_window = EnkrBesVDatoteko()
     elif v.get() == 2:
         current_window = DekrBesIzDatoteke()
+    elif v.get() == 3:
+        current_window = PoljubnoDekr()
+    elif v.get() == 4:
+        current_window = DekrPoljubneDat()
 
 
 if __name__ == '__main__':
@@ -174,7 +200,7 @@ if __name__ == '__main__':
     style.configure("TRadiobutton",
                     foreground="black", font=("arial", 15, "bold"))
     # Dictionary to create multiple buttons
-    values = {"Enkriptiraj datoteko v datoteko": 1,
+    values = {"Enkriptiraj besedilo v datoteko": 1,
               "Dekriptiraj besedilo iz datoteke": 2,
               "Poljubno dektriptiranje": 3,
               "Dekriptiranje poljubne datoteke": 4}
