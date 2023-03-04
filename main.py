@@ -94,6 +94,39 @@ def DefinePrivate():
     print("d: ", d)
 
 
+# # def EnkrBesVDatoteko():
+# #     enkrbes = Tk()
+
+# #     enkrbes.title("Enkriptiranje besedila")
+# #     enkrbes.geometry('400x400')
+
+# #     a = Label(enkrbes, text="Enkriptiranje besedila").pack()
+
+# #     enkrbes.mainloop()
+
+
+# # def DekrBesIzDatoteke():
+
+# #     dekrbes = Tk()
+
+# #     dekrbes.title("Dekriptiranje besedila")
+# #     dekrbes.geometry('400x400')
+
+# #     b = Label(dekrbes, text="Dekriptiranje besedila").pack()
+
+# #     dekrbes.mainloop()
+
+
+# # def windowChoice():
+# #     if v.get() == 1:
+# #         EnkrBesVDatoteko()
+# #     elif v.get() == 2:
+# #         DekrBesIzDatoteke()
+
+
+current_window = None
+
+
 def EnkrBesVDatoteko():
     enkrbes = Tk()
 
@@ -102,7 +135,7 @@ def EnkrBesVDatoteko():
 
     a = Label(enkrbes, text="Enkriptiranje besedila").pack()
 
-    enkrbes.mainloop()
+    return enkrbes
 
 
 def DekrBesIzDatoteke():
@@ -114,14 +147,17 @@ def DekrBesIzDatoteke():
 
     b = Label(dekrbes, text="Dekriptiranje besedila").pack()
 
-    dekrbes.mainloop()
+    return dekrbes
 
 
 def windowChoice():
+    global current_window
+    if current_window:
+        current_window.destroy()
     if v.get() == 1:
-        EnkrBesVDatoteko()
+        current_window = EnkrBesVDatoteko()
     elif v.get() == 2:
-        DekrBesIzDatoteke()
+        current_window = DekrBesIzDatoteke()
 
 
 if __name__ == '__main__':
