@@ -11,6 +11,8 @@ message = []
 cipher = []
 choice = 0
 data = []
+dec_message_arr = []
+dec_message_gui = ""
 
 primes = []
 p = 0
@@ -97,7 +99,8 @@ def DefinePrivate():
 current_window = None
 
 
-def OnSubmitBesedilo():
+def OnSubmitTxtDatoteka():
+    global enkrbes, n, d, e
 
     AllPrimesInRange()
     Define_p_q()
@@ -117,8 +120,43 @@ def OnSubmitBesedilo():
 
     subprocess.run(["messageFormat.bat"], shell=True)
 
+    Label(enkrbes, text="Sporočilo je bilo enkriptirano s ključem:", font=("Arial", 10, "bold")).grid(
+        row=3, column=0)
+    Label(enkrbes, text="n:").grid(row=4, column=0, padx=10, pady=10)
+    Label(enkrbes, text="e:").grid(row=5, column=0, padx=10, pady=10)
 
-def OnSubmitDatoteka():
+    n_label = Label(enkrbes, text=n, font=("Arial", 10, "bold"),
+                    foreground="#655DBB")
+    n_label.grid(row=4, column=1, padx=10, pady=10)
+
+    e_label = Label(enkrbes, text=e, font=("Arial", 10, "bold"),
+                    foreground="#655DBB")
+    e_label.grid(row=5, column=1, padx=10, pady=10)
+
+    Label(enkrbes, text="Za dekriptiranje uporabi:", font=("Arial", 10, "bold")).grid(
+        row=6, column=0)
+    Label(enkrbes, text="n:").grid(row=7, column=0, padx=10, pady=10)
+    Label(enkrbes, text="d:").grid(row=8, column=0, padx=10, pady=10)
+
+    n_label.config(cursor='xterm')
+
+    n_label = Label(enkrbes, text=n, font=("Arial", 10, "bold"),
+                    foreground="#655DBB")
+    n_label.grid(row=7, column=1, padx=10, pady=10)
+
+    d_label = Label(enkrbes, text=d, font=("Arial", 10, "bold"),
+                    foreground="#655DBB")
+    d_label.grid(row=8, column=1, padx=10, pady=10)
+
+    n_label.config(cursor='xterm')
+    e_label.config(cursor='xterm')
+    d_label.config(cursor='xterm')
+
+
+def OnSubmitDatotekaBesedilo():
+    global dec_message_gui
+    global dekrbes
+
     n = int(n_gui.get("1.0", "end-1c"))
     d = int(d_gui.get("1.0", "end-1c"))
 
@@ -130,32 +168,44 @@ def OnSubmitDatoteka():
     for i in cipher:
         message.append((int(i) ** d) % n)
 
-    print("\nDekodirano sporočilo: ")
     for i in message:
-        print(chr(i), end='')
+        dec_message_arr.append(chr(i))
 
-    input()
+    dec_message_gui = ''.join(dec_message_arr)
+
+    Label(dekrbes, text="Dekriptirano sporočilo:", font=('Arial', 10)).grid(
+        row=4, column=1, padx=5, pady=5)
+
+    Label(dekrbes, text=dec_message_gui, font=('Arial', 15, "bold"), foreground="#655DBB").grid(
+        row=5, column=1, padx=5, pady=5)
 
 
 def EnkrBesVDatoteko():
     global Text_box
+    global enkrbes
+
     enkrbes = tk.Tk()
 
+    enkrbes.title("Enkriptiranje besedila")
+    # enkrbes.geometry('400x400')
+
+    Label(enkrbes, text="Vpišite sporočilo za enkripcijo:").grid(
+        row=0, column=0)
+
     # create an input box and add it to the enkrbes
-    Text_box = tk.Text(enkrbes, width=200, height=5, font=('Arial, 12'))
-    Text_box.pack()
+    Text_box = tk.Text(enkrbes, width=50, height=5,
+                       font=('Arial, 12'))
+
+    Text_box.grid(row=1, column=0)
 
     # create a button to submit the input
     submit_button = tk.Button(enkrbes, text="Submit",
-                              command=OnSubmitBesedilo).pack()
+                              command=OnSubmitTxtDatoteka)
+
+    submit_button.grid(row=2, column=0)
 
     # Set the protocol to handle window closing
     enkrbes.protocol("WM_DELETE_WINDOW", lambda: close_window(enkrbes))
-
-    enkrbes.title("Enkriptiranje besedila")
-    enkrbes.geometry('400x400')
-
-    a = Label(enkrbes, text="Enkriptiranje besedila").pack()
 
     return enkrbes
 
@@ -164,35 +214,35 @@ def DekrBesIzDatoteke():
 
     global n_gui
     global d_gui
+    global dekrbes
     dekrbes = tk.Tk()
 
     dekrbes.title("Dekriptiranje besedila")
-    dekrbes.geometry('400x400')
+    # dekrbes.geometry('400x400')
     # create an input box and add it to the enkrbes
 
-    Label(dekrbes, text="Vnesite zasebni ključ").grid(row=0, column=0)
+    Label(dekrbes, text="Vnesite zasebni ključ").grid(
+        row=0, column=0, padx=10, pady=10)
 
     n_value = Label(dekrbes, text="n = ")
-    n_value.grid(row=1, column=0, pady=5, padx=5)
+    n_value.grid(row=1, column=0, pady=(0, 5), padx=5)
 
     d_value = Label(dekrbes, text="d = ")
-    d_value.grid(row=2, column=0, pady=5, padx=5)
+    d_value.grid(row=2, column=0, pady=(0, 15), padx=5)
 
     n_gui = tk.Text(dekrbes, font=('Arial, 10'), width=15, height=1)
-    n_gui.grid(row=1, column=1, pady=5, padx=5)
+    n_gui.grid(row=1, column=1, pady=(0, 5), padx=5)
 
     d_gui = tk.Text(dekrbes, font=('Arial, 10'), width=15, height=1)
-    d_gui.grid(row=2, column=1, pady=5, padx=5)
+    d_gui.grid(row=2, column=1, pady=(0, 15), padx=5)
 
     # create a button to submit the input
     submit_button = tk.Button(dekrbes, text="Potrdi",
-                              command=OnSubmitDatoteka)
-    submit_button.grid(row=1, column=2)
+                              command=OnSubmitDatotekaBesedilo)
+    submit_button.grid(row=1, column=2, padx=10, pady=10)
 
     # Set the protocol to handle window closing
     dekrbes.protocol("WM_DELETE_WINDOW", lambda: close_window(dekrbes))
-
-    print("test")
 
     return dekrbes
 
