@@ -1,3 +1,4 @@
+#-------------------------------------IMPORTS-------------------------------------#
 import random
 import sys
 import os
@@ -6,7 +7,9 @@ import subprocess
 from tkinter import *
 from tkinter.ttk import *
 import tkinter as tk
+import pyperclip
 
+#-------------------------------------VARIABLES-------------------------------------#
 message = []
 cipher = []
 choice = 0
@@ -28,6 +31,7 @@ d = 0
 FermatPrimes = [17, 257, 65537, 42944967297]
 
 
+#-------------------------------------FUNCTIONS-------------------------------------#
 def AllPrimesInRange():
     min = 100
     max = 200
@@ -96,6 +100,10 @@ def DefinePrivate():
     print("d: ", d)
 
 
+def copy_to_clipboard(label_text):
+    pyperclip.copy(label_text)
+
+
 current_window = None
 
 
@@ -131,27 +139,31 @@ def OnSubmitTxtDatoteka():
     Label(enkrbes, text="e:").grid(row=5, column=0, padx=10, pady=10)
 
     n_label = Label(enkrbes, text=n, font=("Arial", 10, "bold"),
-                    foreground="#655DBB")
+                    foreground="#655DBB", cursor='xterm')
     n_label.grid(row=4, column=1, padx=10, pady=10)
 
     e_label = Label(enkrbes, text=e, font=("Arial", 10, "bold"),
-                    foreground="#655DBB")
+                    foreground="#655DBB", cursor='xterm')
     e_label.grid(row=5, column=1, padx=10, pady=10)
+    Button(enkrbes, text="Kopiraj", command=lambda: copy_to_clipboard(e)).grid(
+        row=5, column=2)
 
     Label(enkrbes, text="Za dekriptiranje uporabi:", font=("Arial", 10, "bold")).grid(
         row=6, column=0)
     Label(enkrbes, text="n:").grid(row=7, column=0, padx=10, pady=10)
     Label(enkrbes, text="d:").grid(row=8, column=0, padx=10, pady=10)
 
-    n_label.config(cursor='xterm')
-
     n_label = Label(enkrbes, text=n, font=("Arial", 10, "bold"),
-                    foreground="#655DBB")
+                    foreground="#655DBB", cursor='xterm')
     n_label.grid(row=7, column=1, padx=10, pady=10)
+    Button(enkrbes, text="Kopiraj", command=lambda: copy_to_clipboard(n)).grid(
+        row=7, column=2)
 
     d_label = Label(enkrbes, text=d, font=("Arial", 10, "bold"),
-                    foreground="#655DBB")
+                    foreground="#655DBB", cursor='xterm')
     d_label.grid(row=8, column=1, padx=10, pady=10)
+    Button(enkrbes, text="Kopiraj", command=lambda: copy_to_clipboard(d)).grid(
+        row=8, column=2)
 
     n_label.config(cursor='xterm')
     e_label.config(cursor='xterm')
