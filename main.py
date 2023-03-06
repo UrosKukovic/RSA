@@ -101,6 +101,11 @@ current_window = None
 
 def OnSubmitTxtDatoteka():
     global enkrbes, n, d, e
+    global cipher
+
+    # clean message and cipher (message can't be global)
+    message = []
+    cipher = []
 
     AllPrimesInRange()
     Define_p_q()
@@ -156,6 +161,7 @@ def OnSubmitTxtDatoteka():
 def OnSubmitDatotekaBesedilo():
     global dec_message_gui
     global dekrbes
+    global message, cipher, n, d
 
     n = int(n_gui.get("1.0", "end-1c"))
     d = int(d_gui.get("1.0", "end-1c"))
