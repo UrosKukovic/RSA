@@ -175,6 +175,10 @@ def OnSubmitDatotekaBesedilo():
     global dekrbes
     global message, cipher, n, d
 
+    dec_message_arr = []
+    dec_message_gui = ""
+    message = []
+
     n = int(n_gui.get("1.0", "end-1c"))
     d = int(d_gui.get("1.0", "end-1c"))
 
