@@ -2,7 +2,7 @@
 
 A from-scratch implementation of the RSA public-key cryptosystem in Python — no `pycryptodome`, no `cryptography`, no `rsa` package. Key generation, encryption, and decryption are all hand-written using plain modular arithmetic, wrapped in a small Tkinter GUI.
 
-This project was built to understand RSA at the algorithm level: how a keypair is derived from two primes, why the public/private exponents are mathematical inverses of each other, and how modular exponentiation turns that into working encryption.
+I built this to take RSA out of the textbook and put it into working code — turning the theory (prime selection, totients, modular inverses, modular exponentiation) into a program I could run, break, and visualize step by step. Seeing a keypair actually get generated and a message get encrypted and decrypted end-to-end made the math click in a way that reading about it never did.
 
 ## How it works
 
